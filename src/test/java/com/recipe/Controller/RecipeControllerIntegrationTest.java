@@ -9,24 +9,22 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.FixMethodOrder;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.junit.runners.MethodSorters;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.recipe.model.Recipe;
 
-@RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class RecipeControllerIntegrationTest {
 
 	@Autowired
@@ -38,7 +36,8 @@ public class RecipeControllerIntegrationTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void testIntegration1FetchAllRecipes() throws Exception {
+	@Order(1)
+	public void testIntegrationFetchAllRecipes() throws Exception {
 		mvc.perform(get("/recipe").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("$[0].name", is("Maggie Noodles")))
@@ -53,7 +52,8 @@ public class RecipeControllerIntegrationTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void testIntegration2FetchRecipeById() throws Exception {
+	@Order(2)
+	public void testIntegrationFetchRecipeById() throws Exception {
 		mvc.perform(get("/recipe/2").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
 				.andExpect(jsonPath("name", is("Coffee")));
@@ -65,7 +65,8 @@ public class RecipeControllerIntegrationTest {
 	 * @throws Exception exception if any.
 	 */
 	@Test
-	public void testIntegration3SaveRecipe() throws Exception {
+	@Order(3)
+	public void testIntegrationSaveRecipe() throws Exception {
 		Recipe recipe = new Recipe(10, "Soup", "No", "2", "1 piece chicken,  750ml water, salt, pepper",
 				"Cook chicken in boiled water for 15 minutes. Add salt and pepper as per taste.");
 		mvc.perform(post("/recipe/create").content(new ObjectMapper().writeValueAsString(recipe))
@@ -82,7 +83,8 @@ public class RecipeControllerIntegrationTest {
 	 * @throws Exception possible exception if any.
 	 */
 	@Test
-	public void testIntegration4SaveRecipeWhenIdPresent() throws Exception {
+	@Order(4)
+	public void testIntegrationSaveRecipeWhenIdPresent() throws Exception {
 		Recipe recipe = new Recipe(8, "Soup", "No", "2", "1 piece chicken,  750ml water, salt, pepper",
 				"Cook chicken in boiled water for 15 minutes. Add salt and pepper as per taste.");
 		mvc.perform(post("/recipe/create").content(new ObjectMapper().writeValueAsString(recipe))
@@ -95,7 +97,8 @@ public class RecipeControllerIntegrationTest {
 	 * @throws Exception possible exception if any.
 	 */
 	@Test
-	public void testIntegration5UpdateRecipe() throws Exception {
+	@Order(5)
+	public void testIntegrationUpdateRecipe() throws Exception {
 
 		Recipe recipe = new Recipe(8, "Chicken Soup", "No", "2", "1 piece chicken,  750ml water, salt, pepper",
 				"Cook chicken in boiled water for 15 minutes. Add salt and pepper as per taste.");
@@ -114,7 +117,8 @@ public class RecipeControllerIntegrationTest {
 	 * @throws Exception possible exception if any.
 	 */
 	@Test
-	public void testIntegration6UpdateRecipeWhenIdNotPresent() throws Exception {
+	@Order(6)
+	public void testIntegrationUpdateRecipeWhenIdNotPresent() throws Exception {
 
 		Recipe recipe = new Recipe(11, "Chicken Soup", "No", "2", "1 piece chicken,  750ml water, salt, pepper",
 				"Cook chicken in boiled water for 15 minutes. Add salt and pepper as per taste.");
@@ -131,7 +135,8 @@ public class RecipeControllerIntegrationTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void testIntegration7SearchRecipeByParams() throws Exception {
+	@Order(7)
+	public void testIntegrationSearchRecipeByParams() throws Exception {
 		mvc.perform(get("/recipe/search?vegeterian=No&servings=1&ingredients=butter&include=true&instructions=pan")
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -146,7 +151,8 @@ public class RecipeControllerIntegrationTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void testIntegration8SearchRecipeByParamsNoContent() throws Exception {
+	@Order(8)
+	public void testIntegrationSearchRecipeByParamsNoContent() throws Exception {
 		mvc.perform(get("/recipe/search?vegeterian=No&servings=10&ingredients=butter&include=true&instructions=pan")
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNoContent());
 	}
@@ -157,7 +163,8 @@ public class RecipeControllerIntegrationTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void testIntegration9SearchRecipeByInvalidParams() throws Exception {
+	@Order(9)
+	public void testIntegrationSearchRecipeByInvalidParams() throws Exception {
 		mvc.perform(get("/recipe/search?vegeterian=No&servings=10&ingredients=butter&include=true")
 				.contentType(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
 	}
@@ -168,7 +175,8 @@ public class RecipeControllerIntegrationTest {
 	 * @throws Exception possible exception if any.
 	 */
 	@Test
-	public void testIntegration10DeleteRecipeById() throws Exception {
+	@Order(10)
+	public void testIntegrationDeleteRecipeById() throws Exception {
 		mvc.perform(delete("/recipe/delete/6").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
 		mvc.perform(get("/recipe/6").contentType(MediaType.APPLICATION_JSON)).andExpect(status().isNotFound());
 	}
@@ -179,7 +187,8 @@ public class RecipeControllerIntegrationTest {
 	 * @throws Exception possible exception if any.
 	 */
 	@Test
-	public void testIntegration11DeleteRecipeByIdInvalidId() throws Exception {
+	@Order(11)
+	public void testIntegrationDeleteRecipeByIdInvalidId() throws Exception {
 		mvc.perform(delete("/recipe/delete/12").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isNotFound());
 	}

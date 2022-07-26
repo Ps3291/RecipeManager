@@ -1,12 +1,12 @@
 # Recipe Manager Web Service
-This Web Application contains ReST APIs performing CRUD operations to Get(based on filters), Create, Update and Delete recipes from a database in a JSON response. This is a standalone application without any integration to frontend framework and API endpoints can be called through Tools like PostMan.
+This Web Application contains ReST APIs performing CRUD operations to Get(based on filters), Create, Update and Delete recipes from a database in a JSON response. This is a standalone application without any integration to frontEnd framework and API EndPoints can be called through Tools like PostMan.
 
 ### Architecture Design
 Recipe Manager Web Service is microservice based layered architectured RESTful Web Service based on SpringBoot Framework and can be deployed independently on premise/cloud.There are 4 layers:
 - API Layer
-  - Top layer and is main interface available for intgeration and interaction with front-end or end user to consume APIs
+  - Top layer and is main interface available for integration and interaction with front-end or end user to consume APIs
   - Contains API end points implementation
-  - Springboot-starter-web module used as a framework to implement ReSTful api end points  
+  - Springboot-starter-web module used as a framework to implement ReSTful API end points  
 - Service Layer
   - Mainly responsible for interacting with Data Access Layer and transferring the recipes data as required by API and Data Access layers
   - Is a module to decouple business logic of recipes data transfer and mapping from/to API layer
@@ -36,7 +36,7 @@ Database      | H2                 |
 * Download code as zip / `git clone https://github.com/Ps3291/RecipeManager.git`
 * Traverse to `RecipeManager` folder containing pom.xml and import it in your IDE as maven project.
 * Run the application as 'Spring Boot App' from 'RecipeManagerApplication' class located in 'com.recipe' package in the IDE. 
-* Application.properties conatins the H2 database configuration, credentials and server.port as shown below. So please make sure that the server port 8081 is free or else update the Application.properties file with available port and re-run the application.
+* Application.properties contains the H2 database configuration, credentials and server.port as shown below. So please make sure that the server port 8081 is free or else update the Application.properties file with available port and re-run the application.
  
 server.port=8081
 
@@ -61,7 +61,7 @@ API End Point      | Method| Purpose             | Request                      
 /recipe/delete/{id}|DELETE | Delete recipe by ID | Recipe id as path parameter    | Deletion message with 200 OK on success, 404 Not Found on invalid ID                            |
 /recipe/search     | GET   | Search by parameters| Filtering fields as path params| Recipe Model list with 200 OK on success, 204 No Content for zero search results and 400 Bad request on missing query params from request URL |
 
-*** Note : For the search recipe endpoint, the search parameters are : vegetarian(yes or no), servings, ingredients(included/excluded as mentioned in path parameter : include(true/false) and instructions. It is mandatory to add all the parameters in Request Path even if they are null. Path parameters ingredient and include work in conjuction since value of include defines if a a certain ingredient is to be included in the search or excluded from the search query.
+*** Note : For the search recipe endpoint, the search parameters are : vegetarian(yes or no), servings, ingredients included/excluded as mentioned in path parameter : include(true/false) and instructions. It is mandatory to add all the parameters in Request Path even if they are null. Path parameters ingredient and include work in conjunction since value of include defines if a a certain ingredient is to be included in the search or excluded from the search query.
 
 
 ### ReST End Points Models and example API calls
@@ -90,8 +90,8 @@ API End Point      | Method| Purpose             | Request                      
 	```
 - ReST API Calls and responses
   - GET request
-	URL : http://localhost:8081/recipe/2
-	- Response :
+	URL : http://localhost:8081/recipe/2 \
+	Response :
   ```
 	{
     "id": 2,
@@ -103,8 +103,8 @@ API End Point      | Method| Purpose             | Request                      
 	}
   ```
   - POST request 
-	URL : http://localhost:8081/recipe/create
-	- Request Body :
+	URL : http://localhost:8081/recipe/create \
+	Request Body :
   ```
 	{
     "id": 9,
@@ -116,12 +116,12 @@ API End Point      | Method| Purpose             | Request                      
 	}
   ```
     Response Body:
-```
+  ```
   Recipe created successfully with Id : 9
   ```
   - PUT request
-	URL : http://localhost:8081/recipe/update
-	- Request Body :
+	URL : http://localhost:8081/recipe/update \
+	Request Body :
   ```
 	{
     "id": 9,
@@ -137,14 +137,14 @@ API End Point      | Method| Purpose             | Request                      
    Updated recipe with ID: 9
   ```
   - DELETE request 
-	URL : http://localhost:8081/recipe/delete/9
-	- Response Body :
+	URL : http://localhost:8081/recipe/delete/9 \
+	Response Body :
   ```
    Deleted Recipe with ID : 9
   ```
   - GET request
-	URL : http://localhost:8081/recipe/search?vegeterian=no&servings=1&ingredients=pumpkin&include=false&instructions=
-   - Response Body :
+	URL : http://localhost:8081/recipe/search?vegeterian=no&servings=1&ingredients=pumpkin&include=false&instructions= \
+   Response Body :
   ```
     {
         "id": 6,
