@@ -56,10 +56,10 @@ public class RecipeController {
 	@GetMapping("/recipe/{id}")
 	public ResponseEntity<Recipe> getRecipeById(@PathVariable Integer id) {
 		final String methodName = "getRecipeById";
-		logger.info(methodName + " : Call service to fetch recipe by Id : " + id);
+		logger.info(methodName + " : Call service to fetch recipe by Id : {}", id);
 		Recipe recipe = service.findbyId(id);
 		if (recipe == null) {
-			logger.info(methodName + " : No recipe exists by Id : " + id);
+			logger.info(methodName + " : No recipe exists by Id : {}", id);
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		} else {
 			return ResponseEntity.status(HttpStatus.OK).body(recipe);
@@ -78,11 +78,11 @@ public class RecipeController {
 		Recipe recipeObject = service.save(recipe);
 
 		if (recipeObject == null) {
-			logger.info(methodName + " : Could not create recipe by ID : " + recipe.getId());
+			logger.info(methodName + " : Could not create recipe by ID : {}", recipe.getId());
 			return ResponseEntity.status(HttpStatus.CONFLICT)
 					.body("Error creating recipe because Id : " + recipe.getId() + " already exists");
 		} else {
-			logger.info(methodName + " : Call service to create recipe by Id : " + recipe.getId());
+			logger.info(methodName + " : Call service to create recipe by Id : {}", recipe.getId());
 			return ResponseEntity.status(HttpStatus.CREATED).body("Recipe created successfully with Id :" + recipe.getId());
 		}
 	}
@@ -102,7 +102,7 @@ public class RecipeController {
 			service.update(recipe);
 			return ResponseEntity.status(HttpStatus.OK).body("Updated recipe with ID: " + recipe.getId());
 		} else {
-			logger.info(methodName + " : Recipe to update does not exist, Id : " + recipe.getId());
+			logger.info(methodName + " : Recipe to update does not exist, Id : {}", recipe.getId());
 			return ResponseEntity.status(HttpStatus.NOT_FOUND)
 					.body("Recipe ID to update : " + recipe.getId() + " does not exist");
 		}
@@ -118,11 +118,11 @@ public class RecipeController {
 	public ResponseEntity<String> deleteRecipe(@PathVariable Integer id) {
 		final String methodName = "deleteRecipe";
 		try {
-			logger.info(methodName + " : Call service to delete recipe by Id : " + id);
+			logger.info(methodName + " : Call service to delete recipe by Id : {}",  id);
 			service.delete(id);
 			return ResponseEntity.status(HttpStatus.OK).body("Deleted Recipe with ID : " + id);
 		} catch (EmptyResultDataAccessException e) {
-			logger.info(methodName + " : Recipe to delete does not exist, Id : " + id);
+			logger.info(methodName + " : Recipe to delete does not exist, Id : {}", id);
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Recipe found with ID : " + id);
 		}
 	}

@@ -30,4 +30,5 @@ public class RecipeConverter {
 		return new Recipe(recipeEntity.getId(), recipeEntity.getName(), recipeEntity.getVegeterian(),
 				recipeEntity.getServings(), recipeEntity.getIngredients(), recipeEntity.getInstructions());
 	}
+
 }

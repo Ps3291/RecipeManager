@@ -1,4 +1,4 @@
-INSERT INTO RecipeEntity (Id, Name, vegeterian, servings, Ingredients, Instructions)  VALUES
+INSERT INTO RecipeEntity (id, name, vegeterian, servings, ingredients, instructions)  VALUES
   (1, 'Maggie Noodles', 'Yes', 2, '1 maggie, 1tbsp butter, 250ml water', 'Boil water and tastemaker sachet in a saucepan. Add noodle cake and buuter to it and cook for 10 mins.'),
   (2, 'Coffee', 'Yes', 1, '1 tbsp coffee powder, 1 tsp sugar, 150ml milk or creamer', 'Heat milk with sugar and coffee in a saucepan. Pour in a cup and serve'),
   (3, 'Pumpkin Soup', 'Yes', 2, '2 tbsp olive oil,2 onions,1kg pumpkin peeled, deseeded and chopped into chunks, 700ml vegetable stock, 150ml cream', 'Heat oil in a saucepa and  onions for 5 mins. Add pumpkin and cook for 8-10 mins.Pour vegetable stock with salt and pepper. Add double cream into the pan and puree with a blender.'),

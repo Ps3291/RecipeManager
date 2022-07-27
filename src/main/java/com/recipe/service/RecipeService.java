@@ -35,7 +35,7 @@ public class RecipeService {
 		List<RecipeEntity> recipeEntities = repo.findAll();
 		List<Recipe> recipes = new ArrayList<>(recipeEntities.size());
 		recipeEntities.forEach(recipeEntity -> recipes.add(RecipeConverter.entityToModel(recipeEntity)));
-		logger.debug(methodName + ": Fetching all Recipes" + recipes);
+		logger.info(methodName + ": Fetching all Recipes");
 		return recipes;
 	}
 
@@ -66,12 +66,13 @@ public class RecipeService {
 	public Recipe update(Recipe recipe) {
 
 		final String methodName = "update";
-		logger.debug(methodName + ":" + "Updating Recipe : {}", recipe);
 		RecipeEntity recipeEntity = RecipeConverter.modelToEntity(recipe);
 
 		if (repo.findById(recipeEntity.getId()).isPresent()) {
+			logger.info(methodName + ":" + "Updating Recipe");
 			return RecipeConverter.entityToModel(repo.save(recipeEntity));
 		} else {
+			logger.info(methodName + ":" + "Recipe ID does not exist");
 			return null;
 		}
 	}
@@ -87,10 +88,10 @@ public class RecipeService {
 		RecipeEntity recipeEntity;
 		if (repo.findById(id).isPresent()) {
 			recipeEntity = repo.findById(id).get();
-			logger.debug(methodName + " : Recipe found : {}", recipeEntity);
+			logger.info(methodName + " : Recipe found");
 			return RecipeConverter.entityToModel(recipeEntity);
 		} else {
-			logger.debug(methodName + " : Recipe not found with ID : {}", id);
+			logger.info(methodName + " : Recipe with ID : {} not found", id);
 			return null;
 		}
 	}
@@ -137,6 +138,7 @@ public class RecipeService {
 		}
 
 		if (recipeEntities.isEmpty()) {
+			logger.info(methodName + " : No match found for the given search parameters");
 			return null;
 		} else {
 			List<Recipe> recipes = new ArrayList<>(recipeEntities.size());
